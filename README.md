@@ -18,7 +18,6 @@ All access is:
 
 ## Architecture
 
-![Architecture](images/architecture.png)
 
 
 ## 1️⃣ Zero Trust Entry Path
@@ -28,7 +27,7 @@ Instead of SSH:
 - IAM authorizes SSM
 - SSM opens a secure tunnel to the instance
 
-![SSM Session](images/ssm-session.png)
+
 
 
 ## 2️⃣ Session Audit (CloudTrail)
@@ -37,30 +36,23 @@ Every shell session generates CloudTrail events.
 
 This shows who started a session and **when**:
 
-![CloudTrail StartSession](images/cloudtrail-startsession.png)
 
 Full SSM activity is also logged:
 
-![CloudTrail Events](images/cloudtrail-events.png)
-
----
 
 ## 3️⃣ No Internet Access
 
 The instance cannot reach the public internet:
 
-![No Internet](images/no-internet-curl.png)
 
 This proves:
 > Network access is denied even while management access works.
 
----
 
 ## 4️⃣ Private AWS Control Plane Access
 
 SSM still works because the instance uses **VPC Interface Endpoints**:
 
-![VPC Endpoints](images/vpc-endpoints.png)
 
 These allow:
 - SSM
@@ -74,8 +66,6 @@ These allow:
 ## 5️⃣ Zero Trust Security Posture
 
 The instance security group has **no inbound rules**:
-
-![No Inbound](images/ec2-no-inbound.png)
 
 This means:
 - No SSH
