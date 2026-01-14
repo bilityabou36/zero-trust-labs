@@ -1,93 +1,29 @@
-# Private EC2 Access Without SSH (Zero Trust)
+# Zero Trust Labs
 
-This lab demonstrates identity-based privileged access to EC2 with **no network trust** using AWS Systems Manager (SSM), CloudTrail, and VPC Endpoints.
+This repository contains hands-on Zero Trust architecture labs demonstrating how traditional perimeter- and network-based trust models are replaced with identity-driven, auditable access controls.
 
-The instance has:
-- No inbound ports
-- No SSH
-- No bastion host
-- No VPN
-- No public internet
+The labs align with:
+- NIST SP 800-207 (Zero Trust Architecture)
+- Enterprise PAM and privileged access models
+- Cloud-native Zero Trust implementations
 
-All access is:
-- IAM authenticated
-- Encrypted
-- Fully audited
+## Current Labs
 
----
+### Network Pillar
+- **Private EC2 Access Without SSH (AWS SSM)**  
+  Identity-based privileged access to EC2 with no inbound ports, no VPN, and full session auditing.
 
-## Architecture
+## Design Philosophy
+- Identity over network location
+- Explicit verification
+- Least privilege access
+- Continuous monitoring and auditability
 
+Each lab includes:
+- Architecture diagram
+- Evidence artifacts
+- Clear mapping to Zero Trust principles
 
-
-## 1️⃣ Zero Trust Entry Path
-
-Instead of SSH:
-- Users authenticate to AWS IAM
-- IAM authorizes SSM
-- SSM opens a secure tunnel to the instance
-
-
-
-
-## 2️⃣ Session Audit (CloudTrail)
-
-Every shell session generates CloudTrail events.
-
-This shows who started a session and **when**:
-
-
-Full SSM activity is also logged:
-
-
-## 3️⃣ No Internet Access
-
-The instance cannot reach the public internet:
-
-
-This proves:
-> Network access is denied even while management access works.
-
-
-## 4️⃣ Private AWS Control Plane Access
-
-SSM still works because the instance uses **VPC Interface Endpoints**:
-
-
-These allow:
-- SSM
-- SSM Messages
-- EC2 Messages
-
-…without public internet.
-
----
-
-## 5️⃣ Zero Trust Security Posture
-
-The instance security group has **no inbound rules**:
-
-This means:
-- No SSH
-- No RDP
-- No application ports
-- Only identity-based control
-
----
-
-## What This Proves
-
-This lab implements:
-
-| Traditional | Zero Trust |
-|-----------|-----------|
-| SSH Keys | IAM Identity |
-| Bastion Hosts | SSM |
-| Network trust | Device + Identity trust |
-| No session logs | Full CloudTrail audit |
-| Internet dependency | Private VPC endpoints |
-
-This is how modern PAM and Zero Trust access is implemented in regulated enterprises.
 
 
 
