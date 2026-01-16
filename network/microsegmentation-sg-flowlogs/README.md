@@ -16,3 +16,5 @@ This lab demonstrates how to control and validate east-west traffic between two 
 ## Evidence
 (Will be added on Days 15–18)
 
+
+Day 12 complete: Deployed two private instances and validated identity-based access via SSM with no public IPs.
