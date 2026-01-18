@@ -19,10 +19,20 @@ This lab demonstrates how to control and validate east-west traffic between two 
 
 Day 12 complete: Deployed two private instances and validated identity-based access via SSM with no public IPs.
 ## Day 13 Results (East-West Validation)
-From the client instance, application traffic to the app instance was **explicitly allowed** on the approved port, while other ports were **denied by default**.
+From the client instance, application traffic to the app instance was **explicitly allowed** on the approved port, while other ports were denied by default.
 
 - ✅ Allowed: HTTPs (443) from `zt-lab2-client-sg` → `zt-lab2-app-sg`
 - ❌ Denied: SSH (22), HTTP (80), ICMP and non-approved ports (e.g., 3306)
 
 This demonstrates micro-segmentation enforced by Security Groups (explicit allow / default deny), independent of network location.
+
+## Day 14 Results (Visibility & Telemetry)
+VPC Flow Logs were enabled to provide visibility into east-west traffic.
+
+- Allowed traffic on the approved port (443) generated ACCEPT entries
+- Non-approved ports (e.g., 22, 80, 3306) generated REJECT entries
+- Logs correlate directly to Security Group enforcement decisions
+
+This confirms micro-segmentation is enforced and observable.
+
 
