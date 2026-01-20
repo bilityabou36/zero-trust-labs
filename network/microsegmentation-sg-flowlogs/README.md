@@ -35,4 +35,31 @@ VPC Flow Logs were enabled to provide visibility into east-west traffic.
 
 This confirms micro-segmentation is enforced and observable.
 
+Day 15 — Private Administrative Access with AWS SSM
+Objective
+Demonstrate private administrative access to EC2 instances without exposing inbound management ports (SSH/RDP), using AWS Systems Manager (SSM) and VPC interface endpoints.
+What This Demonstrates
+No inbound SSH or RDP rules on EC2
+No public IPs on instances
+Administrative access is brokered through AWS SSM
+Reduced attack surface and improved auditability
+Key Zero Trust Concepts
+Elimination of implicit network trust
+Identity-based access instead of network-based access
+Strong visibility and audit logging
+
+Day 16 — Microsegmentation with Security Groups & VPC Flow Logs
+Objective
+Demonstrate Zero Trust network enforcement using default-deny security groups, explicit application access, and continuous traffic verification with VPC Flow Logs.
+Architecture Summary
+Private VPC (10.20.0.0/16)
+Separate client and application subnets
+Security Groups act as Policy Enforcement Points
+Only TCP 443 is explicitly allowed
+All other traffic is implicitly denied
+Enforcement Model
+Explicit Allow: TCP 443 from client security group to application
+Implicit Deny: SSH (22), HTTP (80), ICMP
+Visibility: VPC Flow Logs capture ACCEPT and REJECT events
+
 
