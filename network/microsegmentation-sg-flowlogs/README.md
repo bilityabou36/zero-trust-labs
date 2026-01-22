@@ -134,9 +134,16 @@ The following evidence is included in this project:
 
 ---
 
-## Status
-✅ Day 17 complete  
-➡️ Proceeding to Day 18
+ 
+ Day 18 Verification Method: CloudWatch Logs Insights Query
+include Query #1 (REJECT-only)
+include Query #4 (ACCEPT + REJECT comparison)
+mention: “Used Logs Insights to confirm enforcement outcomes from Flow Logs.”
+Evidence list (tight + strong)
+App SG inbound rule screenshot
+Test commands (failed attempts)
+Logs Insights REJECT result screenshot
+Logs Insights ACCEPT+REJECT screenshot
 
 
 
