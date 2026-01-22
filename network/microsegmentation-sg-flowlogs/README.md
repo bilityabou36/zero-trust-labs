@@ -141,4 +141,7 @@ Unauthorized SSH traffic (TCP port 22) originating from the Client EC2 (10.20.2.
 The REJECT action confirms Security Groups functioned as a Zero Trust Policy Enforcement Point, enforcing default-deny access and preventing unauthorized lateral movemen
 
 
+Day 19 Objective 
+Demonstrate that policy violations are detectable, queryable, and explainable using network telemetry — not just blocked silently.
+
 
