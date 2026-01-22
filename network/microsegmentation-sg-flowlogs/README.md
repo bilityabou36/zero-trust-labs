@@ -135,15 +135,10 @@ The following evidence is included in this project:
 ---
 
  
- Day 18 Verification Method: CloudWatch Logs Insights Query
-include Query #1 (REJECT-only)
-include Query #4 (ACCEPT + REJECT comparison)
-mention: “Used Logs Insights to confirm enforcement outcomes from Flow Logs.”
-Evidence list (tight + strong)
-App SG inbound rule screenshot
-Test commands (failed attempts)
-Logs Insights REJECT result screenshot
-Logs Insights ACCEPT+REJECT screenshot
+Verification & Evidence” in Day 18:
+CloudWatch VPC Flow Logs were analyzed using Logs Insights queries to validate enforcement behavior.
+Unauthorized SSH traffic (TCP port 22) originating from the Client EC2 (10.20.2.9) and targeting the App EC2 (10.20.1.223) was explicitly denied at the ENI level (eni-0af2b37e5e88b9f14).
+The REJECT action confirms Security Groups functioned as a Zero Trust Policy Enforcement Point, enforcing default-deny access and preventing unauthorized lateral movemen
 
 
 
