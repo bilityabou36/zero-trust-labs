@@ -1,3 +1,12 @@
+
+## Projects
+- [ZT Network — Microsegmentation (SG + Flow Logs)](./zt-network-microsegmentation)
+- [ZT Network — Private Access via SSM (No inbound)](./zt-network-private-ssm)
+
+
+
+
+
 # Zero Trust Labs
 
 This repository contains hands-on Zero Trust architecture labs demonstrating how traditional perimeter- and network-based trust models are replaced with identity-driven, auditable access controls.
