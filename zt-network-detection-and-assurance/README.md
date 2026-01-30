@@ -1,56 +1,104 @@
-# ZT Network — Detection & Assurance (Flow Logs + Drift Monitoring)
+# ZT Network — Detection & Assurance  
+Flow Logs, GuardDuty, and Automated Isolation
 
 ## Objective
-Move beyond configuring Zero Trust controls to operational assurance.
-This project uses VPC Flow Logs to baseline normal behavior and detect policy drift
-or suspicious traffic patterns.
 
----
+Move beyond simply configuring Zero Trust controls and into **continuous operational assurance.
+
+This project demonstrates how network enforcement is **validated, monitored, and automatically responded to using:
+
+- VPC Flow Logs (telemetry)
+- GuardDuty (threat detection)
+- EventBridge + Lambda (automated response)
+- Security Group quarantine (containment)
+
+The focus is not just “Is Zero Trust configured?”  
+The focus is “Is Zero Trust still being enforced right now?”
+
 
 ## Key Questions
-- What does “normal” ACCEPT and REJECT behavior look like?
-- How would misconfiguration appear in telemetry?
-- How can we continuously verify microsegmentation is still enforced?
 
----
+- What does normal ACCEPT and REJECT behavior look like?
+- How would misconfiguration or drift appear in telemetry?
+- How do we detect when enforcement changes unexpectedly?
+- How do we automatically respond when behavior becomes **suspicious**?
+
+
 
 ## Definitions
 
 ### Normal
-Expected traffic patterns that align with design:
-- ACCEPT on TCP 443
+Expected traffic aligned with microsegmentation design:
+
+- ACCEPT on TCP 443 (approved application traffic)
 - REJECT on SSH (22) and ICMP
+- Consistent source/destination relationships
+
+
 
 ### Drift
-A change in enforcement that was not intended:
-- ACCEPT on new ports
-- Sudden disappearance of expected REJECT patterns
-- New source/destination relationships
+Unintended change in enforcement posture:
 
-### Suspicious
-Traffic inconsistent with baseline:
-- Unexpected port scans
-- REJECT spikes
-- Traffic to unknown destinations
+- ACCEPT on new or unexpected ports
+- Sudden disappearance of expected REJECT patterns
+- New communication paths between workloads
+
+Drift indicates policy misconfiguration, rule changes, or control failure.
 
 ---
 
+### Suspicious
+Traffic that deviates from baseline patterns:
+
+- Port scanning attempts
+- REJECT spikes
+- Connections to unknown or unapproved destinations
+
+Suspicious activity triggers automated containment.
+
+
+## Operational Flow
+
+1. Baseline Network Behavior  
+   Flow Logs establish normal ACCEPT and REJECT patterns.
+
+2. Continuous Monitoring  
+   Queries identify drift and abnormal traffic patterns.
+
+3. Threat Detection 
+   GuardDuty generates findings based on anomalous activity.
+
+4. Automated Response  
+   EventBridge triggers a Lambda function that:
+   - Swaps the EC2 instance Security Group
+   - Isolates the workload
+   - Logs the action to CloudWatch
+
+5. Proof of Enforcement  
+   Post-isolation telemetry confirms network access is blocked.
+
+
+## Evidence Structure
+
+This project is organized to mirror a real incident lifecycle:
+
+| Folder | Purpose |
+|--------|--------|
+| 01-network-detection | Baseline ACCEPT/REJECT behavior |
+| 02-guardduty-detection | Threat detection evidence |
+| 03-response-automation | Lambda + IAM automation proof |
+| 04-isolation-proof | Post-response containment validation |
+
+
 ## Outcome
-This project shows how Zero Trust is operated, not just configured,
-through telemetry, baselining, and drift detection.
 
-## Planned Evidence
+This project demonstrates how Zero Trust is:
 
-| ID | File | Meaning |
-|----|------|---------|
-| 01 | baseline-accept-443.png | Normal allowed traffic |
-| 02 | baseline-reject-22-icmp.png | Normal denied traffic |
-| 03 | reject-count-by-port.png | Pattern awareness |
-| 04 | eni-traffic-validation.png | Workload boundary enforcement |
-| 05 | drift-detection-logic.png | Query that flags unexpected ACCEPT |
-| 06 | cloudwatch-logstream.png | Continuous telemetry source |
+✔ Monitored through telemetry  
+✔ Verified through baselining  
+✔ Defended through detection  
+✔ Enforced through automated containment  
 
-### 🔹 ZT Network — Detection & Assurance
-Operationalizes Zero Trust by baselining network telemetry and detecting policy drift.
+Zero Trust is not a static configuration — it is a continuous assurance process.
 
-📁 Project: [zt-network-detection-and-assurance](./zt-network-detection-and-assurance)
+
