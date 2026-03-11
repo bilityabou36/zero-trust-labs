@@ -67,7 +67,7 @@ CloudWatch logs provide authentication and request visibility.
 
 ```
 architecture/
-    Draw.io architecture diagrams
+    https://github.com/bilityabou36/zero-trust-labs/blob/main/zt-identity-aware-app-access/architecture/zt-identity-aware-access-architecture.png
 
 evidence/
     Screenshots demonstrating configuration and successful access
