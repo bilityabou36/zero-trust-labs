@@ -125,6 +125,29 @@ These projects demonstrate that Zero Trust is:
 Zero Trust is not a static firewall rule or architecture diagram —  
 it is a continuous security lifecycle.
 
+🔹 ZT Identity-Aware Access — Application Protection
+
+Implements Zero Trust application access by requiring user authentication before reaching backend workloads. Access to the application is mediated through an Application Load Balancer integrated with Amazon Cognito, with AWS WAF providing Layer-7 protection and CloudWatch delivering visibility and telemetry.
+
+Key Concepts
+
+Identity-aware access with ALB + Cognito authentication
+
+TLS termination and HTTPS enforcement with ACM
+
+Layer-7 threat protection using AWS WAF
+
+DNS routing with Amazon Route53
+
+Application isolation using ALB → EC2 network boundaries
+
+Request and security telemetry with CloudWatch Logs
+
+📁 Project: zt-identity-aware-app-access
+
+🎯 Outcome
+
+This project demonstrates how Zero Trust principles can be applied to application access by enforcing identity verification before workload access, protecting backend services behind a controlled authentication and inspection layer.
 
 
 
