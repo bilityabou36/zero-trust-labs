@@ -143,11 +143,26 @@ Application isolation using ALB → EC2 network boundaries
 
 Request and security telemetry with CloudWatch Logs
 
-📁 Project: zt-identity-aware-app-access
+ZT Identity-Aware Access — Application Protection
+Core Objective: To move security from the network perimeter to the application layer by enforcing Identity-Aware Proxy (IAP) patterns. This project ensures that no traffic reaches backend workloads without first being authenticated, inspected, and encrypted.
 
-🎯 Outcome
+🏗️ Security Architecture & Implementation
+Identity-Aware Authentication: Integrated Amazon Cognito with an Application Load Balancer (ALB) to enforce user authentication at the edge.
 
-This project demonstrates how Zero Trust principles can be applied to application access by enforcing identity verification before workload access, protecting backend services behind a controlled authentication and inspection layer.
+Layer-7 Defense: Deployed AWS WAF to protect against OWASP Top 10 threats and provide granular request filtering.
+
+Encryption in Transit: Enforced HTTPS/TLS termination using AWS Certificate Manager (ACM) to ensure end-to-end data privacy.
+
+Network Isolation: Implemented strict Security Group boundaries, ensuring EC2 instances only accept traffic from the ALB.
+
+Threat Telemetry: Leveraged CloudWatch Logs and WAF Logging to create a baseline for normal traffic and detect anomalous access patterns.
+
+🛡️ Zero Trust Pillars Validated
+Never Trust, Always Verify: Every request is authenticated via Cognito before the load balancer routes it to the application.
+
+Assume Breach: Uses AWS WAF to mitigate potential application-layer exploits even if the network is reachable.
+
+Visibility & Analytics: Provides deep telemetry into who is accessing the application and from where.
 
 
 
