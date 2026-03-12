@@ -1,39 +1,42 @@
-# AWS Zero Trust Secret Management Lab
+# AWS Zero Trust: Workload Identity & Secret Management
 
-## 🎯 Overview
-This lab demonstrates a **Zero Trust** approach to application secret management. Instead of using long-term IAM Access Keys or hardcoded credentials, this architecture utilizes **IAM Roles** and **AWS Secrets Manager** to provide temporary, least-privilege access to sensitive data.
+## 🎯 Project Overview
+In a traditional environment, applications often store database credentials in local config files or use long-term IAM Access Keys. Both methods create a high risk of credential leakage. 
+
+This project implements a **Zero Trust Architecture** where a workload (EC2 instance) is granted **identity-based**, temporary access to **AWS Secrets Manager**. By leveraging IAM Roles and IMDSv2, we eliminate hardcoded secrets and long-term credentials entirely.
 
 ## 🏗️ Architecture
-1. **AWS Secrets Manager**: Stores the database credentials securely.
-2. **IAM Policy**: Defines the specific "GetSecretValue" permission.
-3. **IAM Role**: Acts as the "Workload Identity" for the EC2 instance.
-4. **Amazon EC2**: The compute resource that retrieves secrets using its attached identity via **IMDSv2**.
+The design follows the principle of "Never Trust, Always Verify." 
 
-## 🛡️ Zero Trust Principles Applied
-* **No Permanent Secrets**: Eliminated the need for `.aws/credentials` files on the server.
-* **Least Privilege**: The IAM role is scoped strictly to the secret it needs.
-* **Verifiable Identity**: Access is granted based on "who" the resource is, not "what" password it knows.
-* **IMDSv2 Hardening**: Protected against SSRF attacks by requiring session-oriented metadata tokens.
+![Architecture Diagram](architecture/zt-identity-workload-secrets-architecture.png)
 
-## 📁 Evidence of Success
-The following evidence was captured during the lab execution:
+### Core Components:
+* **Identity Provider**: AWS IAM (Instance Profiles).
+* **Policy Enforcement Point**: AWS Secrets Manager.
+* **Secure Compute**: Amazon EC2 hardened with IMDSv2.
+* **Credential Lifecycle**: AWS Security Token Service (STS) for ephemeral tokens.
 
-### 1. Secret Configuration
-The secret was created in AWS Secrets Manager, encrypted with AWS KMS.
-![Secret Created](evidence/secret-created.png)
+## 🛡️ Zero Trust Security Features
+* **Elimination of Static Secrets**: No `.aws/credentials` or passwords stored on disk.
+* **Least Privilege Access**: The workload identity is restricted to a single `GetSecretValue` action on a specific resource.
+* **IMDSv2 Enforcement**: Hardened the instance metadata service to require session-oriented tokens, mitigating SSRF (Server-Side Request Forgery) risks.
+* **Auditability**: Every secret access is logged in AWS CloudTrail for security monitoring and compliance.
 
-### 2. Workload Identity Setup
-An IAM Role with a least-privilege policy was created and attached to the EC2 instance.
-![IAM Policy](evidence/iam-role-secrets-policy.png)
-![EC2 Role Attachment](evidence/ec2-role-attached.png)
+## 📂 Project Structure & Evidence
+* `architecture/`: Contains the system design blueprint.
+* `evidence/`: Documented proof of successful implementation.
+    * `iam-role-secrets-policy.png`: Verified least-privilege policy.
+    * `ec2-role-attached.png`: Proof of workload identity binding.
+    * `secret-retrieval.png`: Successful just-in-time retrieval (Sensitive data redacted).
+* `scripts/`: Automation scripts for secret retrieval.
 
-### 3. Successful Retrieval (Verification)
-Using the AWS CLI on the EC2 instance, the secret was successfully retrieved via the instance's identity. 
-*(Note: Sensitive values in the screenshot have been redacted for security).*
-![Secret Retrieval](evidence/secret-retrieval.png)
+## 🚀 Technical Implementation (Developer Workflow)
+To avoid hardcoding passwords, developers use the AWS SDK to fetch secrets into memory at runtime.
 
-## 🛠️ Tools Used
-* AWS CLI
-* AWS IAM & Secrets Manager
-* Amazon EC2 (Amazon Linux 2023)
-* MacOS Terminal / SSH
+```bash
+# Example retrieval via AWS CLI (used by our automation scripts)
+aws secretsmanager get-secret-value \
+    --secret-id zt-db-secret \
+    --query SecretString \
+    --output text
+
